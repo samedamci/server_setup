@@ -6,6 +6,7 @@
 nonroot_username="samedamci"
 packages="zsh neovim rsync git curl wget docker-compose"
 docker="yes"
+arch="amd64" # available: amd64, armhf, arm64
 
 # switch to root
 su -
@@ -22,7 +23,7 @@ install_docker() {
   apt-get install apt-transport-https ca-certificates curl gnupg-agent \
     software-properties-common
   curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian \
+  add-apt-repository "deb [arch=$arch] https://download.docker.com/linux/debian \
    $(lsb_release -cs) stable"
   apt-get update
   apt-get install docker-ce docker-ce-cli containerd.io -y
