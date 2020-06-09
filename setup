@@ -1,0 +1,64 @@
+#!/bin/sh
+
+#~~~~~~~~~~~~~~~
+# CONFIGURATION
+#~~~~~~~~~~~~~~~
+nonroot_username="samedamci"
+packages="zsh neovim rsync git"
+
+# switch to root
+su -
+
+# update
+apt update && apt upgrade
+
+# install packages
+apt install "$packages"
+
+# zsh
+chsh -s /usr/bin/zsh
+chsh -s /usr/bin/zsh "$nonroot_username"
+touch /home/$nonroot_username/.zshrc
+
+printf "\n%s" \
+  "PROMPT='%F{red}%n%f %F{green}%m%f in %B%F{#299b9b}%~%f%b
+%f%F{#777ca5}(%B%F{red}%?%f%b%F{#777ca5})>%b%f '
+
+autoload -U compinit
+zstyle ':completion:*' menu select
+setopt complete_aliases
+
+zstyle ':completion:*' completer _expand _complete _ignored
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+bindkey -v
+export KEYTIMEOUT=1
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+    [[ $1 = 'block' ]]; then
+      echo -ne '\e[2 q'
+    elif [[ ${KEYMAP} == main ]] ||
+      [[ ${KEYMAP} == viins ]] ||
+      [[ ${KEYMAP} = '' ]] ||
+      [[ $1 = 'beam' ]]; then
+	echo -ne '\e[6 q'
+  fi
+}
+
+zle -N zle-keymap-select
+
+zle-line-init() {
+    echo -ne \"\e[6 q\"
+}
+
+echo -ne '\e[6 q'
+preexec() { echo -ne '\e[6 q' ;}" >> /etc/zsh/zshrc
+
+# aliases
+
+
+# nvim
+
+
+# ssh
