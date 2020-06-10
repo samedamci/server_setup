@@ -2,4 +2,4 @@
 
 Script to setup Debian server to personal preferences.
 
-Not tested!
+**Run as root.**

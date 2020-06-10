@@ -8,14 +8,11 @@ packages="zsh neovim rsync git curl wget docker-compose"
 docker="yes"
 arch="amd64" # available: amd64, armhf, arm64
 
-# switch to root
-su -
-
 # update
 apt-get update && apt-get upgrade -y
 
 # install packages
-apt-get install "$packages" -y
+apt-get install $packages -y
 
 # install Docker
 [ "$docker" = "yes" ] && install_docker
@@ -54,13 +51,13 @@ bindkey -v
 export KEYTIMEOUT=1
 
 function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-    [[ $1 = 'block' ]]; then
+  if [[ \${KEYMAP} == vicmd ]] ||
+    [[ \$1 = 'block' ]]; then
       echo -ne '\e[2 q'
-    elif [[ ${KEYMAP} == main ]] ||
-      [[ ${KEYMAP} == viins ]] ||
-      [[ ${KEYMAP} = '' ]] ||
-      [[ $1 = 'beam' ]]; then
+    elif [[ \${KEYMAP} == main ]] ||
+      [[ \${KEYMAP} == viins ]] ||
+      [[ \${KEYMAP} = '' ]] ||
+      [[ \$1 = 'beam' ]]; then
 	echo -ne '\e[6 q'
   fi
 }
